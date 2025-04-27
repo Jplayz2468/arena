@@ -2,15 +2,17 @@ extends Node2D
  
 var peer = ENetMultiplayerPeer.new()
 @export var player_scene: PackedScene
-@export var host_port: int = 135  # Port used when hosting
-@export var remote_address: String = ""  # Set this in inspector when joining
-@export var remote_port: int = 0  # Remote port (different from host port, set in inspector)
+@export var host_port: int = 135  # Port used when hosting locally
+@export var remote_address: String = ""  # Set in inspector for client (ngrok domain)
+@export var remote_port: int = 0  # Set in inspector for client (ngrok port)
 
-# Simple connection status
-var connection_status = "Not connected"
+func _ready():
+	# Set longer timeout for tunnel connections
+	peer.transfer_channel = 0  # Use reliable channel
+	peer.transfer_mode = ENetMultiplayerPeer.TRANSFER_MODE_RELIABLE
 
 func _on_host_pressed():
-	# Create server on host_port
+	# Host always uses the local port
 	var error = peer.create_server(host_port)
 	if error != OK:
 		print("Server creation failed with error: ", error)
@@ -18,40 +20,24 @@ func _on_host_pressed():
 		
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
-	multiplayer.peer_disconnected.connect(_remove_player)
-	
-	print("Server running on port ", host_port)
 	_add_player()
+	print("Server running on port ", host_port)
 
 func _add_player(id = 1):
 	var player = player_scene.instantiate()
 	player.name = str(id)
 	call_deferred("add_child", player)
-	
-func _remove_player(id):
-	if has_node(str(id)):
-		get_node(str(id)).queue_free()
 
 func _on_join_pressed():
-	# Connect to the address and port set in the inspector
-	if remote_address.is_empty():
-		print("Remote address not set in inspector!")
-		return
-		
-	if remote_port <= 0:
-		print("Invalid remote port set in inspector!")
-		return
+	# Configure connection parameters
+	peer.transfer_channel = 0
+	peer.transfer_mode = ENetMultiplayerPeer.TRANSFER_MODE_RELIABLE
 	
 	print("Connecting to ", remote_address, ":", remote_port)
-	
 	var error = peer.create_client(remote_address, remote_port)
 	if error != OK:
 		print("Client creation failed with error: ", error)
 		return
 		
 	multiplayer.multiplayer_peer = peer
-	
-	# Add connection status signals with simple print statements
-	multiplayer.connected_to_server.connect(func(): print("Connected successfully!"))
-	multiplayer.connection_failed.connect(func(): print("Connection failed!"))
-	multiplayer.server_disconnected.connect(func(): print("Server disconnected!"))
+	print("Connection attempt initiated")
