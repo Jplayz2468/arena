@@ -6,16 +6,8 @@
 [node name="game" type="Node2D"]
 script = ExtResource("1_80nbo")
 player_scene = ExtResource("2_e2o6t")
-server_port = 16556
-server_address = "8.tcp.us-cal-1.ngrok.io"
-
-[node name="Host" type="Button" parent="."]
-offset_left = 160.0
-offset_top = 316.0
-offset_right = 204.0
-offset_bottom = 347.0
-theme_override_font_sizes/font_size = 100
-text = "Host"
+remote_address = "8.tcp.us-cal-1.ngrok.io"
+remote_port = 14964
 
 [node name="Join" type="Button" parent="."]
 offset_left = 290.0
@@ -30,5 +22,14 @@ text = "Join
 _spawnable_scenes = PackedStringArray("uid://dj0duyds2eflq")
 spawn_path = NodePath("..")
 
-[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[node name="Host" type="Button" parent="."]
+offset_left = 272.0
+offset_top = 446.0
+offset_right = 504.0
+offset_bottom = 591.0
+theme_override_font_sizes/font_size = 100
+text = "Host
+"
+
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
