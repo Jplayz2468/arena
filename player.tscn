@@ -16,3 +16,5 @@ texture = ExtResource("2_i3pqv")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_onrkg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
