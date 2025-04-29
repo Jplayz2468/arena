@@ -6,8 +6,7 @@
 [node name="game" type="Node2D"]
 script = ExtResource("1_80nbo")
 player_scene = ExtResource("2_e2o6t")
-remote_address = "8.tcp.us-cal-1.ngrok.io"
-remote_port = 14964
+auto_host = false
 
 [node name="Join" type="Button" parent="."]
 offset_left = 290.0
