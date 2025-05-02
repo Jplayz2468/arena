@@ -13,7 +13,7 @@ func _enter_tree():
 
 func _physics_process(delta):
 	if is_multiplayer_authority():
-		velocity = Input.get_vector("ui_left","ui_right","ui_up","ui_down") * 400
+		velocity = Input.get_vector("left","right","up","down") * 800
 		
 		# Check for space bar press to shoot fireball
 		if Input.is_action_just_pressed("ui_accept"):  # Space bar is typically mapped to ui_accept
