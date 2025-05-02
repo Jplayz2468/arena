@@ -64,11 +64,11 @@ properties/0/replication_mode = 1
 size = Vector2(51, 72)
 
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(600, 300)
 script = ExtResource("1_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(576.25, 301.5)
 scale = Vector2(2.89062, 3.28125)
 sprite_frames = SubResource("SpriteFrames_b26j0")
 autoplay = "default"
@@ -78,8 +78,7 @@ frame_progress = 0.724566
 replication_config = SubResource("SceneReplicationConfig_onrkg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576.25, 322.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(576.75, 317.5)
+position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_n7ghd")
